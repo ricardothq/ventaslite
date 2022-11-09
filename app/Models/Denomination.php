@@ -9,5 +9,5 @@ class Denomination extends Model
 {
     use HasFactory;
 
-    protected $fillabel =['type','value','image'];
+    protected $fillable =['type','value','image'];
 }

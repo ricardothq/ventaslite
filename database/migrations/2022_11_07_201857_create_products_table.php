@@ -21,7 +21,7 @@ class CreateProductsTable extends Migration
             $table->decimal('price',10,2)->default(0);
             $table->integer('stock');
             $table->integer('alerts');
-            $table->string('stock',100)->nullabel();
+            $table->string('image',100)->nullabel();
 
             $table->unsignedBigInteger('category_id');
             $table->foreign('category_id')->references('id')->on('categories');
