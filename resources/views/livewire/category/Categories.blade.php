@@ -32,7 +32,7 @@
                                 </td>
                                 <td class="text-center">
                                     <span>
-                                        <img src="{{asset('storage/categories/' .$category->image)}}"
+                                        <img src="{{asset('storage/categories/' . $category->imagen)}}"
                                             alt="imagen de ejemplo" height="70" width="80" class="rounded">
                                     </span>
                                 </td>
@@ -46,7 +46,7 @@
                                             <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
                                         </svg>
                                     </a>
-                                    <a href="javascript:void(0)" onclick="Confirm({{$category->id}})"
+                                    <a href="javascript:void(0)" onclick="Confirm('{{$category->id}}', '{{$category->products->count()}}')"
                                         class="btn btn-dark" title="Delete">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -60,6 +60,7 @@
                                             <line x1="14" y1="11" x2="14" y2="17"></line>
                                         </svg>
                                     </a>
+
                                 </td>
                             </tr>
                             @endforeach
@@ -93,7 +94,12 @@
 
    
 
-    function Confirm(id){
+    function Confirm(id, products){
+        if(products > 0)
+        {
+            swal('NO SE PUEDE ELIMINAR LA CATEGORIA POR QUE TIENE PRODUCTOS RELACIONADOS')
+            return;
+        }
         Swal.fire({
             title: 'CONFIRMAR',
             text: "CONFIRMAS ELIMINAR EL REGISTRO?",
@@ -103,14 +109,13 @@
             cancelButtonColor: '#d33',
             confirmButtonText: 'Si, borrarlo!'
             // cancelButtonText: 'Cerrar'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                Swal.fire(
-                'ELIMINADO!',
-                'TU ARCHIVO FUE ELIMINADO CORRECTAMENTE')
-            }
-        })
-    }
+        }).then(function(result) {
+             if(result.value){
+                 window.livewire.emit('deleteRow', id)
+                 Swarel.close()
 
+             }
+         });
+    }
 
 </script>

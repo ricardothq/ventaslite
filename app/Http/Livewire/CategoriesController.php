@@ -126,9 +126,13 @@ class CategoriesController extends Component
         $this->selected_id =0;
     }
 
-    public function Destroy($id)
+    protected $listeners = [
+      'deleteRow' => 'Destroy'   
+    ];
+
+    public function Destroy(Category $category)
     {
-        $category = Category::find($id);
+        //dd($category);
         $imageName = $category->image; //imagen temporal
         $category->delete();
 
