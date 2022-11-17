@@ -170,7 +170,35 @@ class ProductsController extends Component
         $this->resetUI();
         $this->emit('product-updated', 'Producto Actualizado');
     }
-    public function resetUI(){
+    public function resetUI()
+    {  
+        $this->name ='';
+        $this->barcode ='';
+        $this->cost ='';
+        $this->price ='';
+        $this->stock ='';
+        $this->alerts ='';
+        $this->search ='';
+        $this->categoryid ='Elegir';
+        $this->image = null;
+        $this->selected_id = 0;
+    }
+
+    protected $listeners =['deleteRow' => 'Destroy'];
+
+    public function Destroy(Product $product)
+    {
+        $imageTemp = $product->image;
+        $product->delete();
+
+        if($imageTemp !=null){
+            if(file_exists('storage/products/' . $imageTemp)){
+                unlink('storage/products/' . $imageTemp);
+            }
+        }
+
+        $this->resetUI();
+        $this->emit('product-deleted', '{Producto Eliminado');
 
     }
 }
