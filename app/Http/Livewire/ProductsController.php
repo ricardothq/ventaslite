@@ -85,7 +85,6 @@ class ProductsController extends Component
             'alerts' => $this->alerts,
             'category_id' => $this->categoryid
         ]);
-        dd('hola mundo');
       
         if($this->image)
         {
@@ -97,5 +96,8 @@ class ProductsController extends Component
 
         $this->resetUI();
         $this->emit('product-added', 'Producto Registrado');
+    }
+    public function resetUI(){
+
     }
 }
