@@ -4,7 +4,7 @@
 <div class="col-sm-12 col-md-6">
     <div class="form-group">
         <label>Tipo</label>
-        <select wire:model="type">
+        <select wire:model="type" class="form-control">
             <option value="Elegir">Elegir</option>
             <option value="BILLETE">BILLETE</option>
             <option value="MONEDA">MONEDA</option>
@@ -14,6 +14,7 @@
     </div>
 </div>
 <div class="col-sm-12 col-md-6">
+    <label>Valor</label>
     <div class="input-group">
         <div class="input-group-prepend">
             <span class="fas fa edit">

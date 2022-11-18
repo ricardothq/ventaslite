@@ -29,11 +29,11 @@
                             @foreach($data as $coin)
                             <tr>
                                 <td><h6>{{$coin->type}}</h6></td>
-                                <td><h6>Bs{{number_format($coin->value,2)}}</h6></td>
+                                <td> <h6 class="text-center">Bs{{number_format($coin->value,2)}}</h6></td>
 
                                 <td class="text-center">
                                     <span>
-                                        <img src="{{asset('storage/coins/' . $coin->imagen)}}"
+                                        <img src="{{asset('storage/' . $coin->imagen)}}"
                                             alt="imagen de ejemplo" height="70" width="80" class="rounded">
                                     </span>
                                 </td>
@@ -47,8 +47,8 @@
                                             <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
                                         </svg>
                                     </a>
-                                    <a href="javascript:void(0)" onclick="Confirm('{{$coin->id}}', '
-                                        class="btn btn-dark" title="Delete">
+                                    <a href="javascript:void(0)" onclick="Confirm('{{$coin->id}}')"
+                                        class="btn btn-dark mtmobile" title="Delete">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                             stroke-linecap="round" stroke-linejoin="round"
@@ -88,10 +88,10 @@
             $('#theModal').modal('hide')
         });
         window.livewire.on('item-deleted', msg =>{
-            // $('#theModal').modal('hide')
+            $('#theModal').modal('hide')
             //noty
         });
-        window.livewire.on('modal-show', msg=>{
+        window.livewire.on('show-modal', msg=>{
             $('#theModal').modal('show')
         });
         window.livewire.on('modal-hide', msg=>{
