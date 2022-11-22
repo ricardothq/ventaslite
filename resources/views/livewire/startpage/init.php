@@ -1,9 +1,9 @@
 <div class="row sales layout-top-spacing">
     <div class="col-sm-12">
-        <div class="widget-chart-one">
+        <div class="widget widget-chart-one">
             <div class="widget-heading">
                 <h4 class="car-title">
-                    <b>ComponentName | PageTitle </b>
+                    <b>componentName | pageTitle </b>
                 </h4>
                 <ul class="tabs tab-pills">
                     <li>
