@@ -24,15 +24,15 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($roles as $role)
+                            @foreach($permisos as $permiso)
                             <tr>
-                                <td><h6>{{$role->id}}</h6> </td>
+                                <td><h6>{{$permiso->id}}</h6> </td>
                                 <td class="text-center">
-                                    <h6>{{$role->name}}</h6>
+                                    <h6>{{$permiso->name}}</h6>
                                 </td>
                                 <td class="text-center">
                                     <a href="javascript:void(0)"
-                                    wire:click="Edit({{$role->id}})"
+                                    wire:click="Edit({{$permiso->id}})"
                                     class="btn btn-dark mtmobile" title="Editar Registro">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit">
                                         <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
@@ -40,7 +40,7 @@
                                     </svg>
                                     </a>
                                     <a href="javascript:void(0)"
-                                    onclick="Confirm('{{$role->id}}')"
+                                    onclick="Confirm('{{$permiso->id}}')"
                                     class="btn btn-dark" title="Eliminar Registro">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2">
                                         <polyline points="3 6 5 6 21 6"></polyline>
@@ -55,31 +55,31 @@
                             @endforeach
                         </tbody>
                     </table>
-                    {{$roles->links()}}
+                    {{$permisos->links()}}
                 </div>
             </div>
         </div>
     </div>
-@include('livewire.roles.form')
+@include('livewire.permisos.form')
 </div>
 
 <script>
     document.addEventListener('DOMContentLoaded', function(){
-        window.livewire.on('role-added', Msg => {
+        window.livewire.on('permiso-added', Msg => {
             $('#theModal').modal('hide')
             noty(Msg)
         })
-        window.livewire.on('role-updated', Msg => {
+        window.livewire.on('permiso-updated', Msg => {
             $('#theModal').modal('hide')
             noty(Msg)
         })
-        window.livewire.on('role-deleted', Msg => {
+        window.livewire.on('permiso-deleted', Msg => {
             noty(Msg)
         })
-        window.livewire.on('role-exists', Msg => {
+        window.livewire.on('permiso-exists', Msg => {
             noty(Msg)
         })
-        window.livewire.on('role-error', Msg => {
+        window.livewire.on('permiso-error', Msg => {
             noty(Msg)
         })
         window.livewire.on('hide-modal', Msg => {

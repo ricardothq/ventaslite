@@ -17,9 +17,9 @@
                         </span>
                       </span>
                     </div>
-                    <input type="text" wire:model.lazy="roleName" class="form-control" placeholder="ej: Admin" maxlength="255">
+                    <input type="text" wire:model.lazy="permissionName" class="form-control" placeholder="ej: Category_Index" maxlength="255">
                 </div>
-                @error('roleName') <span class="text-danger er">{{$message}}</span> @enderror
+                @error('permissionName') <span class="text-danger er">{{$message}}</span> @enderror
             </div>
         </div>
 
@@ -29,9 +29,9 @@
          <button type="button" wire:click.prevent="resetUI()" class="btn btn-dark close-btn text-info" data-dismiss="modal">CERRAR</button>
   
          @if($selected_id < 1)
-         <button type="button" wire:click.prevent="CreateRole()" class="btn btn-dark close-modal">GUARDAR</button>
+         <button type="button" wire:click.prevent="CreatePermission()" class="btn btn-dark close-modal">GUARDAR</button>
          @else
-         <button type="button" wire:click.prevent="UpdateRole()" class="btn btn-dark close-modal">ACTUALIZAR</button>
+         <button type="button" wire:click.prevent="UpdatePermission()" class="btn btn-dark close-modal">ACTUALIZAR</button>
          @endif
         </div>
       </div>
