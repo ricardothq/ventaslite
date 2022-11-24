@@ -8,48 +8,64 @@
             </div>
             <div class="widget widget-content">
                 <div class="form-inline">
-                    <div class="form-group">
-                        
-                    </div>
+                    <div class="form-group mr-5">
+                        <select wire:model="role" class="form-control">
+                            <option value="Elegir" selected>== Selecciona el Role ==</option>
+                            @foreach ($roles as $role)
+                            <option value="{{$role->id}}" >== Selecciona el Role ==</option>
+                            @endforeach
 
+                        </select>
+                    </div>
+                    <button wire:click.prevent="SyncAll()" type="button" class="btn btn-dark mbmobile inblock mr-5">Sincronizar Todos</button>
+
+                    <button onclick="Revocar()" type="button" class="btn btn-dark mbmobile mr-5">Revocar Todos</button>
                 </div>
 
-                <div class="table-responsive">
-                    <table class="table table-bordered table striped mt-1">
-                        <thead class="text-white" style="background: #3B3F5C">
-                            <tr>
-                                <th class="table-th text-white">DESCRIPCION</th>
-                                <th class="table-th text-white">IMAGEN</th>
-                                <th class="table-th text-white">ACTIONS</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><h6>Category Name</h6> </td>
-                                <td class="text-center">
-                                    <span>
-                                        <img src="" alt="imagen de ejemplo" height="70" width="80" class="rounded"
-                                        >
-                                    </span>
-                                </td>
-                                <td class="text-center">
-                                    <a href="javascript:void(0)"class="btn btn-dark mtmobile" title="Edit">
-                                        <i class="fas fa-edit"></i>
-                                    </a>
-                                    <a href="javascript:void(0)" class="btn btn-dark" title="Delete">
-                                        <i class="fas fa-trash"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    Pagintion
+                <div class="row mt-3">
+                    <div class="col-sm-12">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table striped mt-1">
+                                <thead class="text-white" style="background: #3B3F5C">
+                                    <tr>
+                                        <th class="table-th text-white text-center">ID</th>
+                                        <th class="table-th text-white text-center">PERMISO</th>
+                                        <th class="table-th text-white text-center">ROLES CON EL PERMISO</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($permisos as $permiso)
+                                    <tr>
+                                        <td><h6 class="text-center">{{$permiso->id}}</h6></td>
+                                        <td class="text-center">
+                                            <div class="n-check">
+                                                <label class="new-control new-checkbox checkbox-primary">
+                                                    <input type="checkbox"
+                                                    wire:change="SyncPermiso($('#p' + {{ $permiso->id}}).is(':checked'), '{{ $permiso->name}}' )"
+                                                    id="p{{ $permiso->id }}"
+                                                    value="{{ $permiso->id }}"
+                                                    class="new-control-input"
+                                                    {{ $permiso->checked == 1 ? 'checked' : '' }}
+                                                    >
+                                                    <span class="new-control-indicator"></span>
+                                                    <h6>{{ $permiso->name}}</h6>
+                                                </label>
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <h6>{{ \App\Models\User::permission($permiso->name)->count }}</h6>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                            {{$permisos->links()}}
+                        </div>
+                        
+                    </div>
                 </div>
             </div>
         </div>
-
-
-
     </div>
 Include Form
 </div>
@@ -57,5 +73,41 @@ Include Form
 <script>
     document.addEventListener('DOMContentLoaded', function(){
 
+        window.livewire.on('sync-error', Msg => {
+            noty(Msg)
+        })
+        window.livewire.on('permi', Msg => {
+            noty(Msg)
+        })
+        window.livewire.on('syncall', Msg => {
+            noty(Msg)
+        })
+        window.livewire.on('removeall', Msg => {
+            noty(Msg)
+        })
     });
+
+    function Revocar(){
+        if(products > 0)
+        {
+            swal('NO SE PUEDE ELIMINAR LA CATEGORIA POR QUE TIENE PRODUCTOS RELACIONADOS')
+            return;
+        }
+        Swal.fire({
+            title: 'CONFIRMAR',
+            text: "CONFIRMAS REVOCAR TODOS LOS PERMISOS?",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si, borrarlo!'
+            // cancelButtonText: 'Cerrar'
+        }).then(function(result) {
+             if(result.value){
+                 window.livewire.emit('revokeall', id)
+                 Swarel.close()
+
+             }
+         });
+    }
 </script>

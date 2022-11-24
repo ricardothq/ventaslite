@@ -2,10 +2,16 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Denomination;
 use Darryldecode\Cart\Facades\CartFacade as Cart;
+use App\Models\Denomination;
 use Livewire\Component;
-use DB;
+use App\Models\Product;
+
+use App\Models\Sale;
+use App\Models\SaleDetails;
+use Exception;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 
 class PosController extends Component
 {
@@ -43,10 +49,10 @@ class PosController extends Component
 
     public function ScanCode($barcode, $cant = 1)
     {
-        dd($barcode);
+        //dd($barcode);
         $product = Product::where('barcode', $barcode)->first();
 
-        if($product == null || empty($empty))
+        if($product == null /* || empty($empty) */)
         {
             $this->emit('scan-notfound','El producto no esta registrado');
         } else {
@@ -104,7 +110,7 @@ class PosController extends Component
         $this->emit('scan-ok', $title);
     }
 
-    public function updateQty($product, $cant = 1)
+    public function updateQty($productId, $cant = 1)
     {
         $title ='';
         $product = Product::find($productId);
@@ -137,12 +143,14 @@ class PosController extends Component
 
     public function removeItem($productId)
     {
+        dd($productId);
         Cart::remove($productId);
 
         $this->total = Cart::getTotal();
         $this->itemsQuantity = Cart::getTotalQuantity();
 
-        $this->emit('scan-ok', 'Producto Eliminado');
+        $this->emit('scan-ok', 'Producto Eliminado'); 
+        
     }
 
     public function decreaseQty($productId)
@@ -207,7 +215,7 @@ class PosController extends Component
             {
                 $items = Cart::getContent();
                 foreach ($items as $item) {
-                    SaleDeatil::create([
+                    SaleDetail::create([
                         'price' =>$item->price,
                         'quantity' =>$item->quantity,
                         'product_id' =>$item->id,
