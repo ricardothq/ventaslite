@@ -2,7 +2,7 @@
     <div class="col-sm-12">
         <div class="widget widget-chart-one">
             <div class="widget-heading">
-                <h4 class="car-title">
+                <h4 class="card-title">
                     <b>componentName | pageTitle </b>
                 </h4>
                 <ul class="tabs tab-pills">

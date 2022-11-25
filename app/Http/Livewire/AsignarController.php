@@ -33,7 +33,7 @@ class AsignarController extends Component
 
         if($this->role != 'Elegir')
         {
-            $list = Permission::join('role_has_permissions as rp','rp.permissions_id','permissions.id')->where('role_id', $this->role)->pluck('permissions.id')->toArray();
+            $list = Permission::join('role_has_permissions as rp','rp.permission_id','permissions.id')->where('role_id', $this->role)->pluck('permissions.id')->toArray();
             $this->old_permissions = $list;
         }
 

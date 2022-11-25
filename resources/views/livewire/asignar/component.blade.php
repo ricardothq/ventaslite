@@ -2,7 +2,7 @@
     <div class="col-sm-12">
         <div class="widget widget-chart-one">
             <div class="widget-heading">
-                <h4 class="car-title">
+                <h4 class="card-title">
                     <b>{{ $componentName}}</b>
                 </h4>
             </div>
@@ -12,12 +12,12 @@
                         <select wire:model="role" class="form-control">
                             <option value="Elegir" selected>== Selecciona el Role ==</option>
                             @foreach ($roles as $role)
-                            <option value="{{$role->id}}" >== Selecciona el Role ==</option>
+                            <option value="{{$role->id}}" >{{$role->name}}</option>
                             @endforeach
 
                         </select>
                     </div>
-                    <button wire:click.prevent="SyncAll()" type="button" class="btn btn-dark mbmobile inblock mr-5">Sincronizar Todos</button>
+                    <button wire:click.prevent="SyncAll" type="button" class="btn btn-dark mbmobile inblock mr-5">Sincronizar Todos</button>
 
                     <button onclick="Revocar()" type="button" class="btn btn-dark mbmobile mr-5">Revocar Todos</button>
                 </div>
@@ -41,7 +41,7 @@
                                             <div class="n-check">
                                                 <label class="new-control new-checkbox checkbox-primary">
                                                     <input type="checkbox"
-                                                    wire:change="SyncPermiso($('#p' + {{ $permiso->id}}).is(':checked'), '{{ $permiso->name}}' )"
+                                                    wire:change="syncPermiso($('#p' + {{ $permiso->id}}).is(':checked'), '{{ $permiso->name}}' )"
                                                     id="p{{ $permiso->id }}"
                                                     value="{{ $permiso->id }}"
                                                     class="new-control-input"
@@ -53,7 +53,7 @@
                                             </div>
                                         </td>
                                         <td class="text-center">
-                                            <h6>{{ \App\Models\User::permission($permiso->name)->count }}</h6>
+                                            <h6>{{ \App\Models\User::permission($permiso->name)->count() }}</h6>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -88,12 +88,8 @@ Include Form
     });
 
     function Revocar(){
-        if(products > 0)
-        {
-            swal('NO SE PUEDE ELIMINAR LA CATEGORIA POR QUE TIENE PRODUCTOS RELACIONADOS')
-            return;
-        }
-        Swal.fire({
+    
+        swal({
             title: 'CONFIRMAR',
             text: "CONFIRMAS REVOCAR TODOS LOS PERMISOS?",
             type: 'warning',
@@ -104,10 +100,10 @@ Include Form
             // cancelButtonText: 'Cerrar'
         }).then(function(result) {
              if(result.value){
-                 window.livewire.emit('revokeall', id)
-                 Swarel.close()
+                 window.livewire.emit('revokeall')
+                 swal.close()
 
              }
-         });
+         })
     }
 </script>
