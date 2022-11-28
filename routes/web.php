@@ -7,6 +7,7 @@ use App\Http\Livewire\PermisosController;
 use App\Http\Livewire\PosController;
 use App\Http\Livewire\ProductsController;
 use App\Http\Livewire\RolesController;
+use App\Http\Livewire\UsersController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -27,3 +28,4 @@ Route::get('pos',PosController::class);
 Route::get('roles',RolesController::class);
 Route::get('permisos',PermisosController::class);
 Route::get('asignar',AsignarController::class);
+Route::get('users',UsersController::class);
