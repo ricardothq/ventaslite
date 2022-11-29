@@ -21,8 +21,8 @@
                                 <th class="table-th text-white">USUARIO</th>
                                 <th class="table-th text-white text-center">TELEFONO</th>
                                 <th class="table-th text-white text-center">EMAIL</th>
-                                <th class="table-th text-white text-center">PERFIL</th>
                                 <th class="table-th text-white text-center">ESTATUS</th>
+                                <th class="table-th text-white text-center">PERFIL</th>
                                 <th class="table-th text-white text-center">IMAGEN</th>
                                 <th class="table-th text-white text-center">ACTIONS</th>
                             </tr>

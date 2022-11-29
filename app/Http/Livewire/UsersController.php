@@ -6,6 +6,7 @@ use Spatie\Permission\Models\Role;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
 use Livewire\Component;
+use App\Models\Sale;
 use App\Models\User;
 
 class UsersController extends Component
@@ -13,7 +14,7 @@ class UsersController extends Component
     use WithPagination;
     use WithFileUploads;
 
-    public $name, $phone, $email, $status, $image, $password, $selected_id, $fileLoaded, $role;
+    public $name, $phone, $email, $status, $image, $password, $selected_id, $fileLoaded, $profile;
     public $pageTitle, $componentName, $search;
     private $pagination = 3;
 
@@ -55,6 +56,8 @@ class UsersController extends Component
         $this->search = '';
         $this->status = 'Elegir';
         $this->selected_id = 0;
+        $this->resetValidation();
+        $this->resetPage();
     }
 
     public function edit(User $user)

@@ -33,7 +33,7 @@
     <div class="col-sm-12 col-md-6">
         <div class="form-group">
             <label>Contraseña</label>
-            <input type="text" wire:model.lazy="password" class="form-control">
+            <input type="password" wire:model.lazy="password" class="form-control">
             @error('password')
                 <span class="text-danger er">{{ $message }}</span>
             @enderror
@@ -55,13 +55,13 @@
     <div class="col-sm-12 col-md-6">
         <div class="form-group">
             <label>Asignar role</label>
-            <select wire:model.lazy="role" class="form-control">
+            <select wire:model.lazy="profile" class="form-control">
                 <option value="Elegir" selected>Elegir</option>
                 @foreach ($roles as $role)
-                    <option value="{{ $role->id }}" selected>{{ $role->name }}</option>
+                    <option value="{{ $role->name }}" selected>{{ $role->name }}</option>
                 @endforeach
             </select>
-            @error('role')
+            @error('profile')
                 <span class="text-danger er">{{ $message }}</span>
             @enderror
         </div>
