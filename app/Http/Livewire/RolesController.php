@@ -15,7 +15,7 @@ class RolesController extends Component
 
     public $roleName, $search, $selected_id, $pageTitle, $componentName;
     private $pagination = 5;
-    
+
     public function paginationView()
     {
         return 'vendor.livewire.bootstrap';
@@ -25,12 +25,12 @@ class RolesController extends Component
     {
         $this->pageTitle = 'Listado';
         $this->componentName = 'Roles';
-    }   
+    }
 
 
     public function render()
-    { 
-        if(strlen($this->search) > 0)
+    {
+        if (strlen($this->search) > 0)
             $roles = Role::where('name', 'like', '%' . $this->search . '%')->paginate($this->pagination);
         else
             $roles = Role::orderBy('name', 'asc')->paginate($this->pagination);
@@ -38,8 +38,8 @@ class RolesController extends Component
         return view('livewire.roles.component', [
             'roles' => $roles
         ])
-        ->extends('layouts.theme.app')
-        ->section('content');
+            ->extends('layouts.theme.app')
+            ->section('content');
     }
 
     public function CreateRole()
@@ -51,10 +51,10 @@ class RolesController extends Component
             'roleName.unique' => 'El role ya existe',
             'roleName.min' => 'El nombre del role debe tener al menos 2 caracteres'
         ];
-        
+
         $this->validate($rules, $messages);
 
-        Role::create(['name'=>$this->roleName]);
+        Role::create(['name' => $this->roleName]);
 
         $this->emit('role-added', 'Se registro el role con exito');
         $this->resetUI();
@@ -78,9 +78,9 @@ class RolesController extends Component
             'roleName.unique' => 'El role ya existe',
             'roleName.min' => 'El nombre del role debe tener al menos 2 caracteres'
         ];
-        
+
         $this->validate($rules, $messages);
-        
+
         $role = Role::find($this->selected_id);
         $role->name = $this->roleName;
         $role->save();
@@ -94,23 +94,20 @@ class RolesController extends Component
     public function Destroy($id)
     {
         $permissionCount = Role::find($id)->permissions->count();
-        if ($permissionCount > 0) 
-        {
+        if ($permissionCount > 0) {
             $this->emit('role-error', 'No se puede eliminar el role por que tiene permisos asociados');
             return;
         }
 
         Role::find($id)->delete();
         $this->emit('role-deleted', 'Se actualizo el role con exito');
-
-    } 
+    }
 
     public function AsignarRoles($rolesList)
     {
-        if($this->userSelected > 0)
-        {
+        if ($this->userSelected > 0) {
             $user = User::find($this->userSelected);
-            if($user) {
+            if ($user) {
                 $user->syncRoles($rolesList);
                 $this->emit('msg-ok', 'roles asigandos correctamente');
                 $this->resetInput();
@@ -120,7 +117,7 @@ class RolesController extends Component
 
     public function resetUI()
     {
-        $this->roleName ='';
+        $this->roleName = '';
         $this->search = '';
         $this->selected_id = 0;
         $this->resetValidation();

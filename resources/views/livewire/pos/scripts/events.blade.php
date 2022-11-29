@@ -1,6 +1,5 @@
 <script>
-    document.addEventListener('DOMContentLoaded', function()
-    {
+    document.addEventListener('DOMContentLoaded', function() {
         window.livewire.on('scan-ok', Msg => {
             noty(Msg)
         })
@@ -18,7 +17,7 @@
         })
 
         window.livewire.on('print-ticket', saleId => {
-            window.open("print://" + saleId , '_blank')
+            window.open("print://" + saleId, '_blank')
         })
     })
 </script>

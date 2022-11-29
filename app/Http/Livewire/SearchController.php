@@ -6,7 +6,7 @@ use Livewire\Component;
 
 class SearchController extends Component
 {
-    public $search; 
+    public $search;
 
     public function render()
     {

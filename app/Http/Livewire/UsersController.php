@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Livewire;
+
 use Spatie\Permission\Models\Role;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
@@ -30,25 +31,24 @@ class UsersController extends Component
 
     public function render()
     {
-        if(strlen($this->search) > 0)
-            $data = User::where('name', 'like' ,'%' . $this->search . '%')
-        ->select('*')->orderBy('name', 'asc')->paginate($this->pagination);
+        if (strlen($this->search) > 0)
+            $data = User::where('name', 'like', '%' . $this->search . '%')
+                ->select('*')->orderBy('name', 'asc')->paginate($this->pagination);
         else
             $data = User::select('*')->orderBy('name', 'asc')->paginate($this->pagination);
 
-        return view('livewire.users.component',[
+        return view('livewire.users.component', [
             'data'  => $data,
             'roles' => Role::orderBy('name', 'asc')->get()
         ])
-        ->extends('layouts.theme.app')
-        ->section('content');
-
+            ->extends('layouts.theme.app')
+            ->section('content');
     }
 
     public function resetUI()
     {
         $this->name = '';
-        $this->email= '';
+        $this->email = '';
         $this->password = '';
         $this->phone = '';
         $this->image = '';
@@ -67,25 +67,25 @@ class UsersController extends Component
         $this->email = $user->email;
         $this->password = '';
 
-        $this->emit('show-modal','open!');
+        $this->emit('show-modal', 'open!');
     }
 
-    protected $listeners =[
+    protected $listeners = [
         'deletedRow' => 'destroy',
         'resetUI' => 'resetUI'
     ];
 
     public function Store()
     {
-        $rules =[
-            'name' =>'required|min:3',
-            'email' =>'required|unique:users|email',
-            'status' =>'required|not_in:Elegir',
-            'profile' =>'required|not_in:Elegir',
-            'password' =>'required|min:3'
+        $rules = [
+            'name' => 'required|min:3',
+            'email' => 'required|unique:users|email',
+            'status' => 'required|not_in:Elegir',
+            'profile' => 'required|not_in:Elegir',
+            'password' => 'required|min:3'
         ];
 
-        $messages =[
+        $messages = [
             'name.required' => 'Ingresa el nombre',
             'name.min' => 'El nombre del usuario debe tener al menos 3 caracteres',
             'email.required' => 'Ingresa el correo',
@@ -110,10 +110,10 @@ class UsersController extends Component
             'password' => bcrypt($this->password)
         ]);
 
-        if($this->image){
+        if ($this->image) {
             $customFileName = uniqid() . ' _.' . $this->image->extension();
             $this->image->storeAs('public/users', $customFileName);
-            $user->image =$customFileName;
+            $user->image = $customFileName;
             $user->save();
         }
 
@@ -123,15 +123,15 @@ class UsersController extends Component
 
     public function Update()
     {
-        $rules =[
-            'email' =>"required|email|unique:users,email,{$this->selected_id}",
-            'name' =>'required|min:3',
-            'status' =>'required|not_in:Elegir',
-            'profile' =>'required|not_in:Elegir',
-            'password' =>'required|min:3'
+        $rules = [
+            'email' => "required|email|unique:users,email,{$this->selected_id}",
+            'name' => 'required|min:3',
+            'status' => 'required|not_in:Elegir',
+            'profile' => 'required|not_in:Elegir',
+            'password' => 'required|min:3'
         ];
 
-        $messages =[
+        $messages = [
             'name.required' => 'Ingresa el nombre',
             'name.min' => 'El nombre del usuario debe tener al menos 3 caracteres',
             'email.required' => 'Ingresa el correo',
@@ -157,8 +157,7 @@ class UsersController extends Component
             'password' => bcrypt($this->password)
         ]);
 
-        if($this->image)
-        {
+        if ($this->image) {
             $customFileName = uniqid() . '_.' . $this->image->extension();
             $this->image->storeAs('public/users', $customFileName);
             $imageTemp = $user->image;
@@ -166,10 +165,9 @@ class UsersController extends Component
             $user->image = $customFileName;
             $user->save();
 
-            if($imageTemp !=null)
-            {
-                if(file_exists('storage/users/' . $imageTemp)){
-                    unlink('storage/users/'. $imageTemp);
+            if ($imageTemp != null) {
+                if (file_exists('storage/users/' . $imageTemp)) {
+                    unlink('storage/users/' . $imageTemp);
                 }
             }
         }
@@ -180,11 +178,11 @@ class UsersController extends Component
 
     public function destroy(User $user)
     {
-        if($user){
+        if ($user) {
             $sales = Sale::where('user_id', $user->id)->count();
-            if($sales > 0){
+            if ($sales > 0) {
                 $this->emit('user-withsales', 'No es posible eliminar el usuario por que tiene ventas registradas');
-            }else{
+            } else {
                 $user->delete();
                 $this->resetUI();
                 $this->emit('user-deleted', 'Usuario Eliminado');

@@ -15,7 +15,7 @@ class PermisosController extends Component
 
     public $permissionName, $search, $selected_id, $pageTitle, $componentName;
     private $pagination = 10;
-    
+
     public function paginationView()
     {
         return 'vendor.livewire.bootstrap';
@@ -25,12 +25,12 @@ class PermisosController extends Component
     {
         $this->pageTitle = 'Listado';
         $this->componentName = 'Permisos';
-    }   
+    }
 
 
     public function render()
-    { 
-        if(strlen($this->search) > 0)
+    {
+        if (strlen($this->search) > 0)
             $permisos = Permission::where('name', 'like', '%' . $this->search . '%')->paginate($this->pagination);
         else
             $permisos = Permission::orderBy('name', 'asc')->paginate($this->pagination);
@@ -38,8 +38,8 @@ class PermisosController extends Component
         return view('livewire.permisos.component', [
             'permisos' => $permisos
         ])
-        ->extends('layouts.theme.app')
-        ->section('content');
+            ->extends('layouts.theme.app')
+            ->section('content');
     }
 
     public function CreatePermission()
@@ -51,10 +51,10 @@ class PermisosController extends Component
             'permissionName.unique' => 'El permiso ya existe',
             'permissionName.min' => 'El nombre del permiso debe tener al menos 2 caracteres'
         ];
-        
+
         $this->validate($rules, $messages);
 
-        Permission::create(['name'=>$this->permissionName]);
+        Permission::create(['name' => $this->permissionName]);
 
         $this->emit('permiso-added', 'Se registro el permiso con exito');
         $this->resetUI();
@@ -77,9 +77,9 @@ class PermisosController extends Component
             'permissionName.unique' => 'El permiso ya existe',
             'permissionName.min' => 'El nombre del permiso debe tener al menos 2 caracteres'
         ];
-        
+
         $this->validate($rules, $messages);
-        
+
         $permiso = Permission::find($this->selected_id);
         $permiso->name = $this->permissionName;
         $permiso->save();
@@ -93,21 +93,19 @@ class PermisosController extends Component
     public function Destroy($id)
     {
         $rolesCount = Permission::find($id)->getRoleNames()->count();
-        if ($rolesCount > 0) 
-        {
+        if ($rolesCount > 0) {
             $this->emit('permiso-error', 'No se puede eliminar el permiso por que tiene roles asociados');
             return;
         }
 
         Permission::find($id)->delete();
         $this->emit('permiso-deleted', 'Se elimino el permiso con exito');
+    }
 
-    } 
 
-    
     public function resetUI()
     {
-        $this->permissionName ='';
+        $this->permissionName = '';
         $this->search = '';
         $this->selected_id = 0;
         $this->resetValidation();

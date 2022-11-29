@@ -24,15 +24,16 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td><h6>Category Name</h6> </td>
+                                <td>
+                                    <h6>Category Name</h6>
+                                </td>
                                 <td class="text-center">
                                     <span>
-                                        <img src="" alt="imagen de ejemplo" height="70" width="80" class="rounded"
-                                        >
+                                        <img src="" alt="imagen de ejemplo" height="70" width="80" class="rounded">
                                     </span>
                                 </td>
                                 <td class="text-center">
-                                    <a href="javascript:void(0)"class="btn btn-dark mtmobile" title="Edit">
+                                    <a href="javascript:void(0)" class="btn btn-dark mtmobile" title="Edit">
                                         <i class="fas fa-edit"></i>
                                     </a>
                                     <a href="javascript:void(0)" class="btn btn-dark" title="Delete">
@@ -50,11 +51,11 @@
 
 
     </div>
-Include Form
+    Include Form
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function(){
+    document.addEventListener('DOMContentLoaded', function() {
 
     });
 </script>

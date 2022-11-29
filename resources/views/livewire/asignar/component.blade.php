@@ -3,7 +3,7 @@
         <div class="widget widget-chart-one">
             <div class="widget-heading">
                 <h4 class="card-title">
-                    <b>{{ $componentName}}</b>
+                    <b>{{ $componentName }}</b>
                 </h4>
             </div>
             <div class="widget widget-content">
@@ -12,12 +12,13 @@
                         <select wire:model="role" class="form-control">
                             <option value="Elegir" selected>== Selecciona el Role ==</option>
                             @foreach ($roles as $role)
-                            <option value="{{$role->id}}" >{{$role->name}}</option>
+                                <option value="{{ $role->id }}">{{ $role->name }}</option>
                             @endforeach
 
                         </select>
                     </div>
-                    <button wire:click.prevent="SyncAll" type="button" class="btn btn-dark mbmobile inblock mr-5">Sincronizar Todos</button>
+                    <button wire:click.prevent="SyncAll" type="button"
+                        class="btn btn-dark mbmobile inblock mr-5">Sincronizar Todos</button>
 
                     <button onclick="Revocar()" type="button" class="btn btn-dark mbmobile mr-5">Revocar Todos</button>
                 </div>
@@ -34,44 +35,44 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($permisos as $permiso)
-                                    <tr>
-                                        <td><h6 class="text-center">{{$permiso->id}}</h6></td>
-                                        <td class="text-center">
-                                            <div class="n-check">
-                                                <label class="new-control new-checkbox checkbox-primary">
-                                                    <input type="checkbox"
-                                                    wire:change="syncPermiso($('#p' + {{ $permiso->id}}).is(':checked'), '{{ $permiso->name}}' )"
-                                                    id="p{{ $permiso->id }}"
-                                                    value="{{ $permiso->id }}"
-                                                    class="new-control-input"
-                                                    {{ $permiso->checked == 1 ? 'checked' : '' }}
-                                                    >
-                                                    <span class="new-control-indicator"></span>
-                                                    <h6>{{ $permiso->name}}</h6>
-                                                </label>
-                                            </div>
-                                        </td>
-                                        <td class="text-center">
-                                            <h6>{{ \App\Models\User::permission($permiso->name)->count() }}</h6>
-                                        </td>
-                                    </tr>
+                                    @foreach ($permisos as $permiso)
+                                        <tr>
+                                            <td>
+                                                <h6 class="text-center">{{ $permiso->id }}</h6>
+                                            </td>
+                                            <td class="text-center">
+                                                <div class="n-check">
+                                                    <label class="new-control new-checkbox checkbox-primary">
+                                                        <input type="checkbox"
+                                                            wire:change="syncPermiso($('#p' + {{ $permiso->id }}).is(':checked'), '{{ $permiso->name }}' )"
+                                                            id="p{{ $permiso->id }}" value="{{ $permiso->id }}"
+                                                            class="new-control-input"
+                                                            {{ $permiso->checked == 1 ? 'checked' : '' }}>
+                                                        <span class="new-control-indicator"></span>
+                                                        <h6>{{ $permiso->name }}</h6>
+                                                    </label>
+                                                </div>
+                                            </td>
+                                            <td class="text-center">
+                                                <h6>{{ \App\Models\User::permission($permiso->name)->count() }}</h6>
+                                            </td>
+                                        </tr>
                                     @endforeach
                                 </tbody>
                             </table>
-                            {{$permisos->links()}}
+                            {{ $permisos->links() }}
                         </div>
-                        
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
-Include Form
+    Include Form
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function(){
+    document.addEventListener('DOMContentLoaded', function() {
 
         window.livewire.on('sync-error', Msg => {
             noty(Msg)
@@ -87,8 +88,8 @@ Include Form
         })
     });
 
-    function Revocar(){
-    
+    function Revocar() {
+
         swal({
             title: 'CONFIRMAR',
             text: "CONFIRMAS REVOCAR TODOS LOS PERMISOS?",
@@ -99,11 +100,11 @@ Include Form
             confirmButtonText: 'Si, borrarlo!'
             // cancelButtonText: 'Cerrar'
         }).then(function(result) {
-             if(result.value){
-                 window.livewire.emit('revokeall')
-                 swal.close()
+            if (result.value) {
+                window.livewire.emit('revokeall')
+                swal.close()
 
-             }
-         })
+            }
+        })
     }
 </script>

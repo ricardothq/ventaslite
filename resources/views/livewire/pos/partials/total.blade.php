@@ -10,11 +10,11 @@
 
                             <div class="task-header">
                                 <div>
-                                    <h2>TOTAL: ${{number_format($total,2)}} </h2>
-                                    <input type="hidden" id="hiddenTotal" value="{{$total}}">
+                                    <h2>TOTAL: ${{ number_format($total, 2) }} </h2>
+                                    <input type="hidden" id="hiddenTotal" value="{{ $total }}">
                                 </div>
                                 <div>
-                                    <h4 class="mt-3">Articulos: {{$itemsQuantity}}</h4>
+                                    <h4 class="mt-3">Articulos: {{ $itemsQuantity }}</h4>
                                 </div>
                             </div>
 
