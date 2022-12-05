@@ -74,4 +74,6 @@
     }
 </style>
 
+<link href="{{ asset('plugins/flatpickr/flatpickr.css') }}" rel="stylesheet" type="text/css" />
+
 @livewireStyles
