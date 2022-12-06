@@ -12,7 +12,7 @@
                             <div class="col-sm-12">
                                 <h6>Elige el usuario</h6>
                                 <div class="form-group">
-                                    <select class="form-control">
+                                    <select wire:model="userId" class="form-control">
                                         <option value="0">Todos</option>
                                         @foreach ($users as $user)
                                             <option value="{{ $user->id }}">{{ $user->name }}</option>
@@ -23,7 +23,7 @@
                             <div class="col-sm-12">
                                 <h6>Elige el tipo de reporte</h6>
                                 <div class="form-group">
-                                    <select class="form-control">
+                                    <select wire:model="reportType" class="form-control">
                                         <option value="0">Ventas del dia</option>
                                         <option value="1">Ventas por fecha</option>
                                     </select>
@@ -86,7 +86,7 @@
                                                 <h6>{{ $d->id }}</h6>
                                             </td>
                                             <td class="text-center">
-                                                <h6>{{ number_format($d->total, 2) }}</h6>
+                                                <h6>${{ number_format($d->total, 2) }}</h6>
                                             </td>
                                             <td class="text-center">
                                                 <h6>{{ $d->items }}</h6>
@@ -112,7 +112,6 @@
                                     @endforeach
                                 </tbody>
                             </table>
-                            {{ $categories->links() }}
                         </div>
                     </div>
                 </div>
@@ -124,7 +123,7 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        flatpickr(document.getElementByClassName('flatpickr'), {
+        flatpickr(document.getElementsByClassName('flatpickr'), {
             enableTime: false,
             dateFormat: 'Y-m-d',
             locale: {

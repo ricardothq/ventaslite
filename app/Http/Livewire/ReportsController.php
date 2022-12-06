@@ -28,9 +28,10 @@ class ReportsController extends Component
     {
         $this->SalesByDate();
 
-        return view('livewire.reports', [
+        return view('livewire.reports.component', [
             'users' => User::orderBy('name', 'asc')->get()
-        ])->extends('layouts.theme.app')->section('section');
+        ])->extends('layouts.theme.app')
+            ->section('section');
     }
 
     public function SalesByDate()
@@ -64,6 +65,19 @@ class ReportsController extends Component
 
     public function getDetails($saleId)
     {
-        $htis->details = SaleDetail::join()
+        $this->details = SaleDetail::join('products as p', 'p.id', 'sale_details.product_id')
+            ->select('sale_details.id', 'sale_details.price', 'sale_details.quantity', 'p.name as product')
+            ->where('sale_details.sale_id', $saleId)
+            ->get();
+
+        $suma = $this->details->sum(function ($item) {
+            return $item->price * $item->quantity;
+        });
+
+        $this->sumDetails = $suma;
+        $this->countDetails = $this->details->sum('quantity');
+        $this->saleId = $saleId;
+
+        $this->emit('show-modal', 'details loaded');
     }
 }
