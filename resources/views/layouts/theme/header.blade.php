@@ -34,8 +34,8 @@
                             <div class="media mx-auto">
                                 <img src="assets/img/ricklogin.jpg" class="img-fluid mr-2" alt="avatar">
                                 <div class="media-body">
-                                    <h5>Rick Lopez</h5>
-                                    <p>Developer</p>
+                                    <h5>{{ auth()->user()->name }}</h5>
+                                    <p>{{ auth()->user()->profile }}</p>
                                 </div>
                             </div>
                         </div>

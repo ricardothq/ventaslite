@@ -1,7 +1,9 @@
 <div class="sidebar-wrapper sidebar-theme">
     <nav id="compactSidebar">
+
         <ul class="menu-categories">
-            @can('Category_Index')
+
+            @role('Admin')
                 <li class="active">
                     <a href="{{ url('categories') }}" class="menu-toggle" data-active="true">
                         <div class="base-menu">

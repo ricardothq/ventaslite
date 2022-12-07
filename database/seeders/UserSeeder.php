@@ -17,7 +17,7 @@ class UserSeeder extends Seeder
             'name' => 'Luis Fax',
             'phone' => '3456623447',
             'email' => 'luisfax@gmail.com',
-            'profile' => 'ADMIN',
+            'profile' => 'Admin',
             'status' => 'ACTIVE',
             'password' => bcrypt('123')
 
@@ -26,7 +26,7 @@ class UserSeeder extends Seeder
             'name' => 'Melisa allanes',
             'phone' => '345612347',
             'email' => 'melisa@gmail.com',
-            'profile' => 'EMPLOYED',
+            'profile' => 'Employed',
             'status' => 'ACTIVE',
             'password' => bcrypt('123')
 
