@@ -6,13 +6,17 @@
                     <b>{{ $componentName }} | {{ $pageTitle }}</b>
                 </h4>
                 <ul class="tabs tab-pills">
-                    <li>
-                        <a href="javascript:void(0)" class="tabmenu bg-dark" data-toggle="modal"
-                            data-target="#theModal">Agregar</a>
-                    </li>
+                    @can('Product_Create')
+                        <li>
+                            <a href="javascript:void(0)" class="tabmenu bg-dark" data-toggle="modal"
+                                data-target="#theModal">Agregar</a>
+                        </li>
+                    @endcan
                 </ul>
             </div>
-            @include('common.searchbox')
+            @can('Product_Search')
+                @include('common.searchbox')
+            @endcan
             <div class="widget widget-content">
                 <div class="table-responsive">
                     <table class="table table-bordered table striped mt-1">
@@ -57,6 +61,7 @@
                                         </span>
                                     </td>
                                     <td class="text-center">
+                                        @can('Product_Update')
                                         <a href="javascript:void(0)" wire:click.prevent="Edit({{ $product->id }})"
                                             class="btn btn-dark mtmobile" title="Edit">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -69,6 +74,8 @@
                                                 </path>
                                             </svg>
                                         </a>
+                                        @endcan
+                                        @can('Product_Destroy')
                                         <a href="javascript:void(0)" onclick="Confirm('{{ $product->id }}')"
                                             class="btn btn-dark" title="Delete">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -85,6 +92,7 @@
                                                 </line>
                                             </svg>
                                         </a>
+                                        @endcan
                                     </td>
                                 </tr>
                             @endforeach

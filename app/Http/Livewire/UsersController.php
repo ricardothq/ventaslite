@@ -112,7 +112,7 @@ class UsersController extends Component
             'profile' => $this->profile,
             'password' => bcrypt($this->password)
         ]);
-
+        $user->syncRoles($this->profile);
         if ($this->image) {
             $customFileName = uniqid() . ' _.' . $this->image->extension();
             $this->image->storeAs('public/users', $customFileName);
@@ -160,6 +160,9 @@ class UsersController extends Component
             'password' => bcrypt($this->password)
         ]);
 
+        $user->syncRoles($this->profile);
+
+        
         if ($this->image) {
             $customFileName = uniqid() . '_.' . $this->image->extension();
             $this->image->storeAs('public/users', $customFileName);

@@ -39,3 +39,5 @@ Route::get('report/pdf/{user}/{type}/{f1}/{f2}', [ExportController::class, 'repo
 Route::get('report/pdf/{user}/{type}', [ExportController::class, 'reportPDF']);
 
 //reportes EXCEL
+Route::get('report/excel/{user}/{type}/{f1}/{f2}', [ExportController::class, 'reporteExcel']);
+Route::get('report/excel/{user}/{type}', [ExportController::class, 'reporteExcel']);

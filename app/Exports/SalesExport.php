@@ -7,11 +7,11 @@ use Carbon\Carbon;
 use Maatwebsite\Excel\Concerns\FromCollection;      // para trabajar con colecciones y obtener la data
 use Maatwebsite\Excel\Concerns\WithHeadings;        // para definir los titulos de encabezado
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;   // para interactuar con el libro
-use Maatwebsite\Excel\Concerns\WithCustomStarCell;  // para definir la celda donde inicia el reporte
+use Maatwebsite\Excel\Concerns\WithCustomStartCell;  // para definir la celda donde inicia el reporte
 use Maatwebsite\Excel\Concerns\WithTitle;           // para colocar nombre a las hojas del libro
 use Maatwebsite\Excel\Concerns\WithStyles;          // para dar formato a las celdas
 
-class SalesExport implements FromCollection, WithHeadings, WithCustomStarCell, WithTitle, WithStyles
+class SalesExport implements FromCollection, WithHeadings, WithCustomStartCell, WithTitle, WithStyles
 {
     protected $userId, $dateFrom, $dateTo, $reportType;
 
@@ -30,18 +30,18 @@ class SalesExport implements FromCollection, WithHeadings, WithCustomStarCell, W
             $from = Carbon::parse($this->dateFrom)->format('Y-m-d') . '00:00:00';
             $to = Carbon::parse($this->dateTo)->format('Y-m-d') . '23:59:59';
         } else {
-            $from = Carbon::parse($dateFrom)->format('Y-m-d') . '00:00:00';
-            $to = Carbon::parse($dateTo)->format('Y-m-d') . '23:59:59';
+            $from = Carbon::parse(Carbon::now())->format('Y-m-d') . '00:00:00';
+            $to = Carbon::parse(Carbon::now())->format('Y-m-d') . '23:59:59';
         }
 
         if ($this->userId == 0) {
             $data = Sale::join('users as u', 'u.id', 'sales.user_id')
-                ->select('sales.*', 'u.name as user')
+                ->select('sales.id', 'sales.total', 'sales.items', 'sales.status', 'u.name as user', 'sales.created_at')
                 ->whereBetween('sales.created_at', [$from, $to])
                 ->get();
         } else {
             $data = Sale::join('users as u', 'u.id', 'sales.user_id')
-                ->select('sales.*', 'u.name as user')
+                ->select('sales.id', 'sales.total', 'sales.items', 'sales.status', 'u.name as user', 'sales.created_at')
                 ->whereBetween('sales.created_at', [$from, $to])
                 ->where('user_id', $this->userId)
                 ->get();
